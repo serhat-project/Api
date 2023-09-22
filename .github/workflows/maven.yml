@@ -17,12 +17,4 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-    
-  test-report:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: dorny/test-reporter@v1.6.0
-        with:
-          path: target/test-results.xml
-          reporter: java-junit
+  
