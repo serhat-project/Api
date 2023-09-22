@@ -30,3 +30,9 @@ jobs:
           name: JEST Tests
           path: '*.xml'
           reporter: jest-junit
+
+      - name: Upload test report artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: test-results.xml
