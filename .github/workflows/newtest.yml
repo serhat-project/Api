@@ -20,16 +20,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Run tests
-        run: mvn test --file pom.xml
-
   test-report:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: dorny/test-reporter@v1
