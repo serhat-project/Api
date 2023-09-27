@@ -112,7 +112,7 @@ public class SignupApiStepdefs {
                     .header("Authorization", accessToken)
                     .when().get("account/user/" + UserID)
                     .then().assertThat()
-                    .body("error.message",is(equalTo("User Not found")));
+                    .body("error.message",is(equalTo("User Not Found")));
         } catch (Exception   e) {
             System.out.println(e.getMessage());
         }
