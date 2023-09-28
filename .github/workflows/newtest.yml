@@ -18,9 +18,7 @@ jobs:
           distribution: 'temurin'
       - name: Build with Maven
         run: mvn clean test --file pom.xml
-      - name: Generate Extent Report
-        run: mvn test-compile exec:java -Dexec.mainClass="runners.Runner"
-
+     
   test:
     needs: build
     runs-on: ubuntu-latest
