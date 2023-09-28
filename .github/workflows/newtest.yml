@@ -27,11 +27,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test-output/ExtentReport
 
-      - name: Configure Git
+      - name: Modify Artifact Name
         run: |
-          git config --local user.email "sucar661@gmail.com"
-          git config --local user.name "serhat-project"
+          # Get the artifact name
+          artifact_name=$(echo "${{ artifacts.test-report.name }}" | tr -d " .")
+
+          # Add a string ID and timestamp to the artifact name
+          new_artifact_name="SmokeTest$(date +"%Y%m%d%H%M%S")${artifact_name}"
+
+          # Rename the artifact
+          mv test-output/ExtentReport/${artifact_name} test-output/ExtentReport/${new_artifact_name}
 
       - name: Transfer Extent Report to gh-pages
         run: |
@@ -41,14 +53,24 @@ jobs:
             exit 1
           fi
 
-          # Copy the extent report to the gh-pages branch
-          git checkout gh-pages
-          cp -r test-output/ExtentReport gh-pages
+          # Get the user name
+          user_name=$(echo "${{ secrets.USERNAME }}")
 
-          # Modify the report.html name by appending a string ID and timestamp
-          mv gh-pages/report.html gh-pages/SmokeTest$(date +"%Y%m%d%H%M%S").html
+          # Get the repository name
+          repo_name=$(echo "${{ github.Api }}")
+
+          # Clone the repository
+          git clone https://github.com/${user_name}/${repo_name} ./gh-pages
+
+          # Switch to the gh-pages branch
+          git checkout gh-pages
+
+          # Copy the extent report to the gh-pages branch
+          cp test-output/ExtentReport/${new_artifact_name} ./gh-pages
 
           # Add and push the changes to the gh-pages branch
-          git add gh-pages/SmokeTest$(date +"%Y%m%d%H%M%S").html
+          git add ./gh-pages/${new_artifact_name}
           git commit -m "Update extent report"
           git push origin gh-pages
+
+     
