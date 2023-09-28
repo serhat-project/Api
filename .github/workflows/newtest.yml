@@ -24,15 +24,9 @@ jobs:
 
       - name: Generate Extent Report
         run: |
-          # Retrieve test results from test-output/ExtentReport folder
-          cp -r test-output/ExtentReport $GITHUB_WORKSPACE/reports
+          # Copy the extent report to the gh-pages branch
+          cp test-output/ExtentReport gh-pages/reports
 
-          # Generate extent report in report.html file
-          # Copy the extent report to the destination report.pages branch's /reports folder
-          cp $GITHUB_WORKSPACE/reports/report.html $GITHUB_WORKSPACE/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html
-
-          # Modify report.html name by appending a string ID and timestamp
-          # Move the extent report to the destination report.pages branch's /reports folder
-          mkdir -p gh-pages/reports
-          mv $GITHUB_WORKSPACE/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html gh-pages/reports/
+          # Modify the report.html name by appending a string ID and timestamp
+          mv gh-pages/reports/report.html gh-pages/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html
 
