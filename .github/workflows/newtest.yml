@@ -30,6 +30,8 @@ jobs:
       - name: Generate report
         run: |
             mv test-output/ExtentReport/report.html report.html #Replace with your report path and name
+            git config --local user.email "sucar661@gmail.com"
+            git config --local user.name "serhat-project"
       - name: Transfer report to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
