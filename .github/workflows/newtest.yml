@@ -33,5 +33,6 @@ jobs:
 
           # Modify report.html name by appending a string ID and timestamp
           # Move the extent report to the destination report.pages branch's /reports folder
+          mkdir -p gh-pages/reports
           mv $GITHUB_WORKSPACE/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html gh-pages/reports/
 
