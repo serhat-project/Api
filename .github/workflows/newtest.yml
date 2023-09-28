@@ -21,12 +21,25 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean test --file pom.xml
-
-      - name: Generate Extent Report
+        
+      # Generate a report folder and move the test results to it
+      - name: Generate Report
         run: |
-          # Copy the extent report to the gh-pages branch
-          cp -r test-output/ExtentReport gh-pages
+          mkdir -p report
+          mv -f test-output/ExtentReport/* report
 
-          # Modify the report.html name by appending a string ID and timestamp
-          mv gh-pages/report.html gh-pages/SmokeTest$(date +"%Y%m%d%H%M%S").html
+      # Modify the report file name by appending a unique string and timestamp to it
+      # This will ensure uniqueness and avoid overwriting existing reports
+      - name: Rename Report
+        run: |
+          mv -f report/ExtentReport.html report/SmokeTest$(date +"%Y-%m-%d-%H-%M").html
 
+      # Transfer the report file to the destination gh-pages branch using the GitHub Pages deploy action
+      # Specify the source folder, the destination branch and a commit message
+      - name: Deploy Report
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./report
+          publish_branch: gh-pages
+          commit_message: "[Automation Test] Updated Report"
