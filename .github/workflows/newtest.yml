@@ -25,8 +25,8 @@ jobs:
       - name: Generate Extent Report
         run: |
           # Copy the extent report to the gh-pages branch
-          cp -r test-output/ExtentReport gh-pages/reports
+          cp -r test-output/ExtentReport gh-pages
 
           # Modify the report.html name by appending a string ID and timestamp
-          mv gh-pages/reports/report.html gh-pages/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html
+          mv gh-pages/report.html gh-pages/SmokeTest$(date +"%Y%m%d%H%M%S").html
 
