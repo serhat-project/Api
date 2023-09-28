@@ -133,7 +133,7 @@ public class SignupApiStepdefs {
                 .then()
                 .assertThat()
                 .contentType(ContentType.JSON)
-                .statusCode(400)
+                .statusCode(HttpStatus.SC_OK)
                 .log().all()
                 .body("success", is(equalTo(false)));
     }
