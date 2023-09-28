@@ -8,12 +8,12 @@ Feature: SignUp Api Feature
   Scenario Outline:Signup with valid credentials in api
     When logged in with "<email>" and "<password>" in api and success message must be true
     And new signed up user log in with "<email>" and "<password>" and take id of new user
-    And root user logs in with valid email "userForTest@gmail.com" and "userForTest@gmail.com1" and delete user
+    And root user logs in with valid email "admin" and "password" and delete user
 
 
     Examples:
       | email                | password |
-      | NewTest12345@gmail.com | kl.2dkaB |
+      | NewTest123456@gmail.com | kl.2dkaB |
 
 @api2
   Scenario Outline: Signup with invalid credentials in api
