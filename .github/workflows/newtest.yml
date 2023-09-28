@@ -35,5 +35,5 @@ jobs:
           subfolder: reports
           tool_name: cucumber
           workflow_name: ${{ github.workflow }}
-          report_name: "${{ github.workflow }}+${{ github.event.commits.0.timestamp }}+${{ github.run_id }}.html"
+          report_name: "${{ github.workflow }}+${{ github.run_id }}+${{ github.run_started_at }}.html"
 
