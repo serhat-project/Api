@@ -33,5 +33,5 @@ jobs:
           subfolder: reports
           tool_name: cucumber
           workflow_name: ${{ github.workflow }}
-          report_name: "${{ github.workflow }}+${{ github.run_id }}+${{ github.run_started_at }}.html"
+          report_url: "${{ github.workflow }}+${{ github.run_id }}+${{ github.run_started_at }}.html"
 
