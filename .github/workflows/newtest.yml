@@ -42,6 +42,7 @@ jobs:
           fi
 
           # Copy the extent report to the gh-pages branch
+          git checkout gh-pages
           cp -r test-output/ExtentReport gh-pages
 
           # Modify the report.html name by appending a string ID and timestamp
