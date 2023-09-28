@@ -22,24 +22,19 @@ jobs:
       - name: Build with Maven
         run: mvn clean test --file pom.xml
         
-      # Generate a report folder and move the test results to it
-      - name: Generate Report
+      - name: Upload test results
+        uses: actions/upload-artifact@v1
+        with:
+            name: Test Results
+            path: test-output/ExtentReport #Replace with the path to your test result folder
+      - name: Generate report
         run: |
-          mkdir -p report
-          mv -f test-output/ExtentReport/* report
-
-      # Modify the report file name by appending a unique string and timestamp to it
-      # This will ensure uniqueness and avoid overwriting existing reports
-      - name: Rename Report
-        run: |
-          mv -f report/ExtentReport.html report/SmokeTest$(date +"%Y-%m-%d-%H-%M").html
-
-      # Transfer the report file to the destination gh-pages branch using the GitHub Pages deploy action
-      # Specify the source folder, the destination branch and a commit message
-      - name: Deploy Report
+            mv test-output/ExtentReport/report.html report.html #Replace with your report path and name
+      - name: Transfer report to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./report
-          publish_branch: gh-pages
-          commit_message: "[Automation Test] Updated Report"
+            github_token: ${{ secrets.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 }} #Replace with your GitHub Personal Access Token
+            publish_dir: . #Replace with the directory where your report.html file is generated
+            publish_branch: gh-pages #Replace with your gh-pages branch name
+           
+         
