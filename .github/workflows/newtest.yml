@@ -33,7 +33,7 @@ jobs:
       - name: Transfer report to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
         with:
-            github_token: ${{ secrets.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 }} #Replace with your GitHub Personal Access Token
+            github_token: ${{ secrets.MYTOKEN }} #Replace with your GitHub Personal Access Token
             publish_dir: . #Replace with the directory where your report.html file is generated
             publish_branch: gh-pages #Replace with your gh-pages branch name
            
