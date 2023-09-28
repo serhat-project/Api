@@ -1,4 +1,4 @@
-name: Java CI with Maven and Test Report
+name: Java CI with Maven and Extent Report
 
 on:
   push:
@@ -16,27 +16,24 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: maven
       - name: Build with Maven
-        run: mvn -B clean test --file pom.xml
-        
-  test-report:
-    runs-on: ubuntu-latest
+        run: mvn clean test --file pom.xml
+      - name: Generate Extent Report
+        run: mvn test-compile exec:java -Dexec.mainClass="runners.Runner"
+
+  test:
     needs: build
-
+    runs-on: ubuntu-latest
     steps:
-    - name: Copy report file to gh-pages branch
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        publish_dir: test-output/ExtentReport/report.html
-        destination_dir: /reports
+      - uses: actions/checkout@v3
+      - name: Upload Extent Report to gh-pages
+        uses: PavanMudigonda/html-reporter-github-pages@v1.2
+        with:
+          test_results: test-output/ExtentReport
+          keep_reports: 20
+          gh_pages: gh-pages
+          subfolder: reports
+          tool_name: cucumber
+          workflow_name: ${{ github.workflow }}
+          report_name: "${{ github.workflow }}+${{ github.event.commits.0.timestamp }}+${{ github.run_id }}.html"
 
-    - name: Rename report file
-      run: |
-        mv /reports/report.html /reports/SmokeTest-$(date +%Y%m%d%H%M%S).html
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-      
