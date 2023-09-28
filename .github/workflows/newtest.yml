@@ -9,29 +9,29 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
+
       - name: Build with Maven
         run: mvn clean test --file pom.xml
-     
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Upload Extent Report to gh-pages
-        uses: PavanMudigonda/html-reporter-github-pages@v1.2
-        with:
-          test_results: test-output/ExtentReport
-          keep_reports: 20
-          gh_pages: gh-pages
-          subfolder: reports
-          tool_name: cucumber
-          workflow_name: ${{ github.workflow }}
-          report_url: "${{ github.workflow }}+${{ github.run_id }}+${{ github.run_started_at }}.html"
+
+      - name: Generate Extent Report
+        run: |
+          # Retrieve test results from test-output/ExtentReport folder
+          cp -r test-output/ExtentReport $GITHUB_WORKSPACE/reports
+
+          # Generate extent report in report.html file
+          # Copy the extent report to the destination report.pages branch's /reports folder
+          cp $GITHUB_WORKSPACE/reports/report.html $GITHUB_WORKSPACE/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html
+
+          # Modify report.html name by appending a string ID and timestamp
+          # Move the extent report to the destination report.pages branch's /reports folder
+          mv $GITHUB_WORKSPACE/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html gh-pages/reports/
 
