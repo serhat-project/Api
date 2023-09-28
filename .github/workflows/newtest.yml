@@ -42,12 +42,12 @@ jobs:
           fi
 
           # Copy the extent report to the gh-pages branch
-          cp -r test-output/ExtentReport gh-pages/reports
+          cp -r test-output/ExtentReport gh-pages
 
           # Modify the report.html name by appending a string ID and timestamp
-          mv gh-pages/reports/report.html gh-pages/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html
+          mv gh-pages/report.html gh-pages/SmokeTest$(date +"%Y%m%d%H%M%S").html
 
           # Add and push the changes to the gh-pages branch
-          git add gh-pages/reports/SmokeTest$(date +"%Y%m%d%H%M%S").html
+          git add gh-pages/SmokeTest$(date +"%Y%m%d%H%M%S").html
           git commit -m "Update extent report"
           git push origin gh-pages
