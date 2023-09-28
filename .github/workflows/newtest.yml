@@ -37,7 +37,7 @@ jobs:
       - name: Modify Artifact Name
         run: |
           # Get the artifact name
-          artifact_name=$(echo "${{ artifacts.test-report.name }}" | tr -d " .")
+          artifact_name=$(echo "${{ artifact.test-report.name }}" | tr -d " .")
 
           # Add a string ID and timestamp to the artifact name
           new_artifact_name="SmokeTest$(date +"%Y%m%d%H%M%S")${artifact_name}"
