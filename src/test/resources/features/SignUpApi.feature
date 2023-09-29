@@ -13,7 +13,7 @@ Feature: SignUp Api Feature
 
     Examples:
       | email                | password |
-      | NewTest123456@gmail.com | kl.2dkaB |
+      | NewTest123456asd@gmail.com | kl.2dkaB |
 
 @api2
   Scenario Outline: Signup with invalid credentials in api
